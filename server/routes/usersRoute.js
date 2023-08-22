@@ -10,7 +10,7 @@ router.post("/register", async (req, res) => {
     })
     try {
         const user = await newuser.save()
-        res.send('User Registred Successfully')
+        res.send('User Registered Successfully')
         console.log(user)
     } catch (error) {
         return res.status(400).json({ error });
@@ -23,8 +23,16 @@ router.post("/login", (req, res) => {
 
     try {
         const user = User.findOne({ email: email, password: password })
-        res.send(user)
+        if (user) {
+            res.send(user)
+        }
+        else {
+            return res.status(400).json({ message: 'Login failed' });
+        }
     } catch (error) {
-        res.send()
+        return res.status(400).json({ error });
     }
 });
+
+
+module.exports = router

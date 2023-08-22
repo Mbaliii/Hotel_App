@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import axios from 'axios';
+
 
 
 function Register() {
@@ -7,7 +9,7 @@ function Register() {
     const [password, setpassword] = useState("");
     const [cpassword, setcpassword] = useState("");
 
-    function register() {
+    async function register() {
         if (password === cpassword) {
             const user = {
                 name,
@@ -15,7 +17,11 @@ function Register() {
                 password,
                 cpassword
             }
-            console.log(user);
+            try {
+                const result = await axios.post('/api/users/register', user).data
+            } catch (error) {
+                console.log(error)
+            }
         }
         else {
             alert('Password does not match')

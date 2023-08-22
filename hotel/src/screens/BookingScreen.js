@@ -8,7 +8,7 @@ function BookingScreen() {
     const { roomid } = useParams();
 
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
+    const [error, setError] = useState();
     const [room, setRoom] = useState(null);
 
     useEffect(() => {
@@ -50,7 +50,6 @@ function BookingScreen() {
                             </b>
                         </div>
 
-
                         <div >
                             <b>
                                 <h1>Amount</h1>
@@ -65,7 +64,7 @@ function BookingScreen() {
                             <button className="btn btn-outline-success">Pay Now</button>
                         </div>
                     </div>
-                </div>): (<Error />)}
+                </div>) : (<Error />)}
         </div>
     );
 }

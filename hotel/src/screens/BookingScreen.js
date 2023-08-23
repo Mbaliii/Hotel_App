@@ -3,12 +3,15 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Loader from '../components/Loader';
 import Error from '../components/Error';
+import moment from 'moment';
 
 function BookingScreen() {
-    const { roomid } = useParams();
+    const { roomid, fromdate, todate } = useParams();
+
+    const totalDays = moment(todate).diff(moment(fromdate), 'days'); 
 
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState();
+    const [error, setError] = useState(false);
     const [room, setRoom] = useState(null);
 
     useEffect(() => {
@@ -25,17 +28,16 @@ function BookingScreen() {
         };
 
         fetchRoomData();
-
     }, [roomid]);
 
     return (
         <div className='m-5'>
-            {loading ? (<h1><Loader /></h1>) : room ?
-                (<div>
+            {loading ? (<h1><Loader /></h1>) : room ? (
+                <div>
                     <div className='row mt-5 bs'>
                         <div className='col-md-5'>
                             <h1>{room.name}</h1>
-                            <img src={room.imageurl[0]} className='bigimg' />
+                            <img src={room.imageurl[0]} className='bigimg' alt="Room" />
                         </div>
                     </div>
                     <div className='col-md-5  justify-content-center bs' style={{ float: 'right' }}>
@@ -44,19 +46,19 @@ function BookingScreen() {
                             <hr />
                             <b>
                                 <p>Name : </p>
-                                <p>From Date : </p>
-                                <p>To Date : </p>
+                                <p>From Date : {fromdate}</p>
+                                <p>To Date : {todate}</p>
                                 <p>Max Count : {room.maxcount} </p>
                             </b>
                         </div>
 
-                        <div >
+                        <div>
                             <b>
                                 <h1>Amount</h1>
                                 <hr />
-                                <p>Total Days : </p>
+                                <p>Total Days : {totalDays}</p>
                                 <p>Rent per night : {room.rentpernight}</p>
-                                <p>Total amount: </p>
+                                <p>Total amount: {room.rentpernight * totalDays}</p>
                             </b>
                         </div>
 
@@ -64,7 +66,10 @@ function BookingScreen() {
                             <button className="btn btn-outline-success">Pay Now</button>
                         </div>
                     </div>
-                </div>) : (<Error />)}
+                </div>
+            ) : (
+                <Error />
+            )}
         </div>
     );
 }

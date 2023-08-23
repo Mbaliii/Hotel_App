@@ -35,10 +35,14 @@ function HomeScreen() {
     }, []);
 
     function filterByDate(dates) {
-        setFromDate(moment(dates[0]).format('DD-MM-YYYY'));
-        setToDate(moment(dates[1]).format('DD-MM-YYYY'));
-
+   
+        const fromDate = dates[0].format('DD-MM-YYYY');
+        const toDate = dates[1].format('DD-MM-YYYY')
+    
+       setFromDate(fromDate);
+        setToDate(toDate);
     }
+    
 
     return (
         <div className='container'>

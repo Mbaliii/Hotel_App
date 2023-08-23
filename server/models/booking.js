@@ -2,15 +2,15 @@ const mongoose = require('mongoose');
 
 const bookingSchema = mongoose.Schema({
     room: {
-        type: String, required: true
+        type: String
     },
     roomid: {
         type: String,
-        required: true
+        
     },
     userid: {
         type: String,
-        required: true
+        
     },
     fromdate:{
         type: String, 
@@ -30,7 +30,7 @@ const bookingSchema = mongoose.Schema({
     },
     transactionId:{
         type: String,
-        required: true
+        
     },
     status :{
         type: String,

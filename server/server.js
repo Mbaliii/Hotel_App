@@ -3,11 +3,13 @@ const app = express();
 
 const dbConfig = require('./db');
 const roomsRoute = require('./routes/roomRoute');
-const usersRoute = require('./routes/usersRoute')
+const usersRoute = require('./routes/usersRoute');
+const bookingRoute = require('./routes/bookingsRoute');
 
 app.use(express.json());
 app.use('/api/rooms', roomsRoute);
-app.use('/api/users', usersRoute)
+app.use('/api/users', usersRoute);
+app.use('/api/bookings', bookingRoute);
 
 const port = process.env.PORT || 5000;
 

@@ -9,7 +9,7 @@ function BookingScreen() {
     const { roomid, fromdate, todate } = useParams();
     const fromdateFormatted = moment(fromdate, 'DD-MM-YYYY');
     const todateFormatted = moment(todate, 'DD-MM-YYYY');
-    const totaldays = moment.duration(todateFormatted.diff(fromdateFormatted)).asDays() + 1;
+    const totaldays = moment.duration(todateFormatted.diff(fromdateFormatted)).asDays() + 6;
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -30,6 +30,10 @@ function BookingScreen() {
 
         fetchRoomData();
     }, [roomid]);
+
+    function bookRoom(){
+        
+    }
 
     return (
         <div className='m-5'>
@@ -66,7 +70,7 @@ function BookingScreen() {
                         </div>
 
                         <div style={{ float: 'right' }}>
-                            <button className="btn btn-outline-success">Pay Now</button>
+                            <button className="btn btn-outline-success" onClick={bookRoom}>Pay Now</button>
                         </div>
                     </div>
                 </div>

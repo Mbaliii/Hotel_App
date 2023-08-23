@@ -8,5 +8,5 @@ function Error({message}) {
             </div>
         </div>
     )
-}
+} 
 export default Error;

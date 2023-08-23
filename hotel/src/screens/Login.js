@@ -18,13 +18,13 @@ function Register() {
         }
         try {
             setloading(true)
-            const result = await axios.post('/api/users/login', user).data
+            const result = (await axios.post('/api/users/login', user)).data
             setloading(false)
             localStorage.setItem('currentUser', JSON.stringify(result));
             window.location.href='/home'
 
         } catch (error) {
-            console.log(error)
+            console.log( error)
             setloading(false)
             seterror(true)
         }

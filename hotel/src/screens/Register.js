@@ -10,9 +10,12 @@ function Register() {
     const [email, setemail] = useState("");
     const [password, setpassword] = useState("");
     const [cpassword, setcpassword] = useState("");
+
+
     const [loading, setloading] = useState(false);
     const [error, seterror] = useState();
     const [success, setsucces] = useState();
+
 
     async function register() {
         if (password === cpassword) {
@@ -26,14 +29,16 @@ function Register() {
                 setloading(true)
                 const result = await axios.post('/api/users/register', user).data
                 setloading(false)
-                localStorage.setItem('currentUser', JSON.stringify(result));
-                window.location.href = '/login'
+                // localStorage.setItem('currentUser', JSON.stringify(result));
+                // window.location.href = '/login'
                 setsucces(true)
 
                 setname('')
                 setemail('')
                 setpassword('')
                 setcpassword('')
+
+
             } catch (error) {
                 console.log(error)
                 setloading(false)
@@ -52,11 +57,8 @@ function Register() {
             {error && (<Error />)}
 
             <div className="row justify-content-center mt-5">
-
-
                 <div className="col-md-5">
                     {success && (<Success message={'Registration success'} />)}
-
                     <div classname="shadow-lg p-3 mb-5 bg-white rounded">
                         <h1>Register</h1>
                         <input type="text" className="form-control shadow-lg p-3 mb-5 bg-white rounded" placeholder="name" value={name} onChange={(e) => { setname(e.target.value) }} />

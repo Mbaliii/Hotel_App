@@ -4,10 +4,11 @@ import '../App.css';
 import Room from '../components/Room';
 import Loader from '../components/Loader';
 import Error from '../components/Error';
-import { DatePicker } from 'antd';
-import moment from 'moment';
+import { DatePicker, Space } from 'antd';
+import moment from 'moment';  
 
-const { RangePicker } = DatePicker;
+
+const { RangePicker } = DatePicker; 
 
 function HomeScreen() {
     const [rooms, setRooms] = useState([]);
@@ -52,7 +53,7 @@ function HomeScreen() {
                 ) : rooms.length > 0 ? (
                     rooms.map((room, index) => (
                         <div className='col-md-9 mt-2' key={index}>
-                            <Room room={room} fromdate={fromdate} todate={todate} /> {/* Pass the correct values */}
+                            <Room room={room} fromdate={fromdate} todate={todate}/>
                         </div>
                     ))
                 ) : (

@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Loader from '../components/Loader';
 import Error from '../components/Error';
 import moment from 'moment';
+import { useParams } from 'react-router-dom';
 
 function BookingScreen() {
     const { roomid, fromdate, todate } = useParams();
+    const moment = require('moment');
+    const fromdateFormatted = moment(fromdate, 'DD-MM-YYYY');
 
-    const totalDays = moment(todate).diff(moment(fromdate), 'days'); 
+
+    const todateFormatted = moment(todate, 'DD-MM-YYYY');
+
+    const daysDifference = todateFormatted.diff(fromdateFormatted, 'days');
+    const totaldays = daysDifference + 1;
+
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -46,8 +53,8 @@ function BookingScreen() {
                             <hr />
                             <b>
                                 <p>Name : </p>
-                                <p>From Date : {fromdate}</p>
-                                <p>To Date : {todate}</p>
+                                <p>From Date : {fromdateFormatted.format('DD-MM-YYYY')}</p>
+                                <p>To Date : {todateFormatted.format('DD-MM-YYYY')}</p>
                                 <p>Max Count : {room.maxcount} </p>
                             </b>
                         </div>
@@ -56,9 +63,9 @@ function BookingScreen() {
                             <b>
                                 <h1>Amount</h1>
                                 <hr />
-                                <p>Total Days : {totalDays}</p>
+                                <p>Total Days : {totaldays}</p>
                                 <p>Rent per night : {room.rentpernight}</p>
-                                <p>Total amount: {room.rentpernight * totalDays}</p>
+                                <p>Total amount: {room.rentpernight * totaldays}</p>
                             </b>
                         </div>
 

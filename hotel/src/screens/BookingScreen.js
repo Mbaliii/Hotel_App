@@ -7,15 +7,9 @@ import { useParams } from 'react-router-dom';
 
 function BookingScreen() {
     const { roomid, fromdate, todate } = useParams();
-    const moment = require('moment');
     const fromdateFormatted = moment(fromdate, 'DD-MM-YYYY');
-
-
     const todateFormatted = moment(todate, 'DD-MM-YYYY');
-
-    const daysDifference = todateFormatted.diff(fromdateFormatted, 'days');
-    const totaldays = daysDifference + 1;
-
+    const totaldays = moment.duration(todateFormatted.diff(fromdateFormatted)).asDays() + 1;
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -39,7 +33,9 @@ function BookingScreen() {
 
     return (
         <div className='m-5'>
-            {loading ? (<h1><Loader /></h1>) : room ? (
+            {loading ? (
+                <h1><Loader /></h1>
+            ) : room ? (
                 <div>
                     <div className='row mt-5 bs'>
                         <div className='col-md-5'>
@@ -52,7 +48,7 @@ function BookingScreen() {
                             <h1>Booking Details</h1>
                             <hr />
                             <b>
-                                <p>Name : </p>
+                                <p>Name : {room.name}</p>
                                 <p>From Date : {fromdateFormatted.format('DD-MM-YYYY')}</p>
                                 <p>To Date : {todateFormatted.format('DD-MM-YYYY')}</p>
                                 <p>Max Count : {room.maxcount} </p>

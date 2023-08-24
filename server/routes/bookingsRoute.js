@@ -14,7 +14,7 @@ router.post("/bookroom", async (req, res) => {
 
     try {
         const newbooking = await Booking.create({
-            room,
+            room: room.name,
             userid,
             fromdate,
             todate,
@@ -22,7 +22,7 @@ router.post("/bookroom", async (req, res) => {
             totaldays,
             transactionId: '1234'
         })
-        const booking = newbooking.save()
+        const booking = await newbooking.save()
         res.send('Room Booked Successfully')
     } catch (error) {
         return res.status(400).json({ error })

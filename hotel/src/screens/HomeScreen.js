@@ -5,24 +5,24 @@ import Room from '../components/Room';
 import Loader from '../components/Loader';
 import Error from '../components/Error';
 import { DatePicker, Space } from 'antd';
-import moment from 'moment';  
 
 
-const { RangePicker } = DatePicker; 
+
+const { RangePicker } = DatePicker;
 
 function HomeScreen() {
     const [rooms, setRooms] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
-    const [fromdate, setFromDate] = useState(); 
-    const [todate, setToDate] = useState(); 
+    const [fromdate, setFromDate] = useState();
+    const [todate, setToDate] = useState();
 
     useEffect(() => {
         async function fetchRooms() {
             try {
                 setLoading(true);
-                const response = await axios.get('/api/rooms/getallrooms');
+                const response = await axios.get('http://localhost:5000/api/rooms/getallrooms');
                 const data = response.data;
                 setRooms(data);
             } catch (error) {
@@ -35,14 +35,14 @@ function HomeScreen() {
     }, []);
 
     function filterByDate(dates) {
-   
+
         const fromDate = dates[0].format('DD-MM-YYYY');
         const toDate = dates[1].format('DD-MM-YYYY')
-    
-       setFromDate(fromDate);
+
+        setFromDate(fromDate);
         setToDate(toDate);
     }
-    
+
 
     return (
         <div className='container'>
@@ -57,7 +57,7 @@ function HomeScreen() {
                 ) : rooms.length > 0 ? (
                     rooms.map((room, index) => (
                         <div className='col-md-9 mt-2' key={index}>
-                            <Room room={room} fromdate={fromdate} todate={todate}/>
+                            <Room room={room} fromdate={fromdate} todate={todate} />
                         </div>
                     ))
                 ) : (

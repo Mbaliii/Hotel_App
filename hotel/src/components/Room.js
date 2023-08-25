@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Modal, Button, Carousel } from 'react-bootstrap';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function Room({ room, fromdate, todate }) {
     const [show, setShow] = useState(false);
@@ -19,9 +19,13 @@ function Room({ room, fromdate, todate }) {
                     <p>Type : {room.type}</p></b>
 
                 <div style={{ float: 'right' }}>
-                    <Link  to={`/book/${room._id}/${fromdate}/${todate}`}>
-                    <button className="btn btn-outline-success m-2">Book Now</button>
-                    </Link>
+
+                    {(fromdate && todate) && (
+                        <Link to={`/book/${room._id}/${fromdate}/${todate}`}>
+                            <button className="btn btn-outline-success m-2">Book Now</button>
+                        </Link>
+                    )}
+
                     <button className="btn btn-outline-success" onClick={handleShow}>View Room</button>
                 </div>
             </div>

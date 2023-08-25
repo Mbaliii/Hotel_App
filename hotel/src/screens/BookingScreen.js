@@ -35,17 +35,18 @@ function BookingScreen() {
 
     async function bookRoom() {
         const bookingDetails = {
-            room:room,
+            room: room.name,
             roomid: room._id,
-            
-            userid: JSON.parse(localStorage.getItem('currentUser'))._id,
-            fromdate,
-            todate,
+            // userid: JSON.parse(localStorage.getItem('currentUser'))._id,
+            fromdate: fromdate,
+            // new Date()
+            todate: todate,
             totalamount,
             totaldays
         };
         try {
             const result = await axios.post('http://localhost:5000/api/bookings/bookroom', bookingDetails);
+            console.log(result);
 
         } catch (error) {
 
@@ -87,7 +88,7 @@ function BookingScreen() {
                         </div>
 
                         <div style={{ float: 'right' }}>
-                            <button className="btn btn-outline-success" onClick={(room)=>bookRoom(room)}>Pay Now</button>
+                            <button className="btn btn-outline-success" onClick={(room) => bookRoom(room)}>Pay Now</button>
                         </div>
                     </div>
                 </div>

@@ -17,6 +17,7 @@ function HomeScreen() {
 
     const [fromdate, setFromDate] = useState();
     const [todate, setToDate] = useState();
+    const [duplicaterooms, setdupilcaterooms] = useState([]);
 
     useEffect(() => {
         async function fetchRooms() {

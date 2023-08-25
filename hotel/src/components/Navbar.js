@@ -30,7 +30,7 @@ function NavBar() {
                         </div>
                     </>) : (<>
                         <li className="nav-item">
-                            <a className="nav-link" href="home">Home </a>
+                            <a className="nav-link" href="home">Rooms </a>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href="/register">Register</a>

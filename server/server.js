@@ -15,4 +15,4 @@ app.use('/api/bookings', bookingRoute);
 
 const port = process.env.PORT || 5000;
 
-app.listen(port, () => console.log(`Node server Started`));
+app.listen(port, () => console.log(`We are within`));

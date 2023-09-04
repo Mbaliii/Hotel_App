@@ -37,7 +37,27 @@ function BookingScreen() {
         fetchRoomData();
     }, [roomid, totaldays]);
 
-    async function bookRoom() {
+    // async function bookRoom() {
+    //     const bookingDetails = {
+    //         room: room.name,
+    //         roomid: room._id,
+    //         // userid: JSON.parse(localStorage.getItem('currentUser'))._id,
+    //         fromdate: fromdate,
+    //         // new Date()
+    //         todate: todate,
+
+    //         totalamount,
+    //         totaldays
+    //     };
+    //     try {
+    //         const result = await axios.post('http://localhost:5000/api/bookings/bookroom', bookingDetails);
+    //         console.log(result);
+
+    //     } catch (error) { }
+    // }
+
+    async function onToken(token) {
+        console.log(token);
         const bookingDetails = {
             room: room.name,
             roomid: room._id,
@@ -45,21 +65,15 @@ function BookingScreen() {
             fromdate: fromdate,
             // new Date()
             todate: todate,
-
             totalamount,
-            totaldays
+            totaldays,
+            token
         };
         try {
             const result = await axios.post('http://localhost:5000/api/bookings/bookroom', bookingDetails);
             console.log(result);
 
-        } catch (error) {
-
-        }
-    }
-
-    function onToken(token){
-        console.log(token);
+        } catch (error) { }
 
     }
 
@@ -98,8 +112,9 @@ function BookingScreen() {
                         </div>
 
                         <div style={{ float: 'right' }}>
-                            <button className="btn btn-outline-success" onClick={(room) => bookRoom(room)}>Pay Now</button>
-                            <StripeCheckout token={onToken} stripeKey='pk_test_51Njyk5HKnXpjE4tLnFQ2PgFtxzIVexi7YLQsXuN5yKixt8tiS5VrsSR1xHn3hG9ut7o8uKRlK3LXvSOJLJ5oM6rK00FiuLR2UW' />
+                            <StripeCheckout amount={totalamount * 100} token={onToken} currency='INR' stripeKey='pk_test_51Njyk5HKnXpjE4tLnFQ2PgFtxzIVexi7YLQsXuN5yKixt8tiS5VrsSR1xHn3hG9ut7o8uKRlK3LXvSOJLJ5oM6rK00FiuLR2UW'>
+                                <button className="btn btn-outline-success" >Pay Now</button>
+                            </StripeCheckout>
                         </div>
                     </div>
                 </div>
@@ -114,3 +129,6 @@ export default BookingScreen;
 
 
 
+
+
+// onClick={(room) => bookRoom(room)}

@@ -73,7 +73,7 @@ function HomeScreen() {
             const temprooms = duplicaterooms.filter(room => room.type.toLowerCase() === e.toLowerCase())
             setRooms(temprooms)
         }
-        else{
+        else {
             setRooms(duplicaterooms)
         }
     }

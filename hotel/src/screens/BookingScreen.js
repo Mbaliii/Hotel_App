@@ -56,13 +56,14 @@ function BookingScreen() {
 
     //     } catch (error) { }
     // }
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'))._id
 
     async function onToken(token) {
         console.log(token);
         const bookingDetails = {
             room: room.name,
             roomid: room._id,
-            // userid: JSON.parse(localStorage.getItem('currentUser'))._id,
+            userid: currentUser,
             fromdate: fromdate,
             // new Date()
             todate: todate,

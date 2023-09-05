@@ -74,12 +74,16 @@ function BookingScreen() {
             setLoading(true);
             const result = await axios.post('http://localhost:5000/api/bookings/bookroom', bookingDetails);
             setLoading(false)
-            Swal.fire('Congratulations you room is booked sucessfully', 'success')``
+            Swal.fire('Congratulations you room is booked sucessfully', 'success').then(result => {
+                window.location.href='/bookings'
+            })
             console.log(result);
 
-        } catch (error) { }
-        setLoading(false)
-        Swal.fire('Congratulations', 'Something went wrong', error)
+        } catch (error) {
+            setLoading(false)
+            Swal.fire('OOPS!!! something went wrong', 'Something went wrong', 'error')
+        }
+
 
     }
 

@@ -55,7 +55,31 @@ h1 {
   padding: 20px !important
 }
 
-.bigimg{
+.bigimg {
   height: 400px;
-  border-radius:  5px !important;
+  border-radius: 5px !important;
+}
+
+input,
+select,
+.ant-picker {
+  box-shadow: none !important;
+  margin-top: 10px !important;
+  border: 2px solid gray !important;
+  width: 100% !important;
+}
+
+h2 {
+  font-size: 30px !important;
+  padding: 10px;
+  font-weight: bold !important;
+  text-align: center;
+}
+
+/* .dropdown-toggle {
+  border: 0px solid black !important
+} */
+
+.ant-picker-input, .ant-picker-input-active {
+  border: none !important;
 }

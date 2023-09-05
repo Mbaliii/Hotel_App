@@ -24,7 +24,7 @@ function NavBar() {
                                 </svg>                                {user.name}
                             </button>
                             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a className="dropdown-item" href="#">Bookings</a>
+                                <a className="dropdown-item" href="/bookings">Bookings</a>
                                 <a className="dropdown-item" href="#" onClick={logout}>Logout</a>
                             </div>
                         </div>

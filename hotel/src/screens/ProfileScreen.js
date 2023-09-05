@@ -1,20 +1,20 @@
 // import React, { useEffect, useState } from "react";
 // import { Tabs } from 'antd';
-// import { Tab, TabPane } from "react-bootstrap";
 // import axios from "axios";
 // import Loader from '../components/Loader';
 // import Error from '../components/Error';
 
-// const ProfileScreen = () => {
+// const { TabPane } = Tabs;
 
-//     const user = JSON.parse(localStorage.getItem('currentUser'))
+// const ProfileScreen = () => {
+//     const user = JSON.parse(localStorage.getItem('currentUser'));
+
 //     useEffect(() => {
 //         if (!user) {
-//             window.location.href = '/login'
+//             window.location.href = '/login';
 //         }
+//     }, []);
 
-
-//     }, [])
 //     return (
 //         <div className="ml-3 mt-3">
 //             <Tabs defaultActiveKey="1" centered>
@@ -30,55 +30,76 @@
 //                 </TabPane>
 //             </Tabs>
 //         </div>
-//     )
+//     );
 // };
 
-// export default ProfileScreen
+// export default ProfileScreen;
 
 // export function MyBookings() {
-
-//     const user = JSON.parse(localStorage.getItem('currentUser'))
-//     const [bookings, setbookings] = useState([]);
+//     const user = JSON.parse(localStorage.getItem('currentUser'));
+//     const [bookings, setBookings] = useState([]);
 //     const [loading, setLoading] = useState(false);
-//     const [error, setError] = useState();
+//     const [error, setError] = useState(null);
+
 //     useEffect(() => {
-//         const getbookingsbyuserid = async () => {
+//         const getBookingsByUserId = async () => {
 //             try {
-//                 setLoading(true)
-//                 const data = await axios.post('http://localhost:5000/api/bookings/getbookingsbyuserid', { userid: user._id }).data
-//                 // const rooms = await axios.post('http://localhost:5000/api/bookings/getbookingsbyuserid', { userid: user._id }).data
-//                 console.log(data)
-//                 setbookings(data)
-//                 setLoading(false)
-//             } catch (error) { 
-//                 console.log(error);
-//                 setLoading(false)
-//                 setError(error)
+//                 setLoading(true);
+//                 const response = await axios.post('http://localhost:5000/api/bookings/getbookingsbyuserid', { userid: user._id });
+//                 const data = response.data;
+//                 console.log(data);
+//                 setBookings(data);
+//                 setLoading(false);
+//             } catch (error) {
+//                 console.error(error);
+//                 setLoading(false);
+//                 setError(error);
 //             }
+//         };
+
+//         getBookingsByUserId();
+//     }, []);
+// // cancelation of the booking route
+//     async function cancelBooking(bookingid, roomid) {
+//         try {
+//             setLoading(true)
+//             const result = await axios.post('/api/bookings/cancelbooking', { bookingid, roomid }).data
+//             console.log(result);
+//             setLoading(false)
+
+
+//         } catch (error) {
+//             console.log(error);
+//             setLoading(false)
+
 //         }
-//         getbookingsbyuserid()
-//     }, [])
+//     }
+
 //     return (
 //         <div>
 //             <div className="row">
 //                 <div className="col-md-6">
 //                     {loading && (<Loader />)}
 //                     {bookings && (bookings.map(booking => {
-//                         return <div className="bs">
-//                             <h1>{bookings.room}</h1>
-//                             <h1>BookingId : {booking._id}</h1>
-//                             <h1>CheckIn : {booking.fromdate}</h1>
-//                             <h1>CheckOut : {booking.todate}</h1>
-//                             <h1>Amount: {booking.totalamount}</h1>
-//                             <h1>Status : {booking.status == 'booked' ? 'CONFIRMED' : 'CANCELLED'}</h1>
-//                         </div>
+//                         return (
+//                             <div className="bs" key={booking._id}>
+//                                 <h1>{booking.room}</h1>
+//                                 <p><b>BookingId</b> : {booking._id}</p>
+//                                 <p><b>CheckIn</b> : {booking.fromdate}</p>
+//                                 <p><b>CheckOut</b> : {booking.todate}</p>
+//                                 <p><b>Amount</b>: {booking.totalamount}</p>
+//                                 <p><b></b> : {booking.status === 'booked' ? 'CONFIRMED' : 'CANCELLED'}</p>
+//                                 <div className="text-right">
+//                                     <button className="btn btn-secondary" onClick={() => { cancelBooking(booking._id, booking.roomid) }}>Cancel Booking</button>
+//                                 </div>
+//                             </div>
+//                         );
 //                     }))}
 //                 </div>
 //             </div>
 //         </div>
-//     )
+//     );
 // }
-
 
 import React, { useEffect, useState } from "react";
 import { Tabs } from 'antd';
@@ -142,6 +163,22 @@ export function MyBookings() {
         getBookingsByUserId();
     }, []);
 
+    // Cancelation of the booking
+    async function cancelBooking(bookingid, roomid) {
+        try {
+            setLoading(true);
+            const result = await axios.post('http://localhost:5000/api/bookings/cancelbooking', { bookingid, roomid });
+            console.log(result);
+            setLoading(false);
+
+            
+            setBookings(prevBookings => prevBookings.filter(booking => booking._id !== bookingid));
+        } catch (error) {
+            console.error(error);
+            setLoading(false);
+        }
+    }
+
     return (
         <div>
             <div className="row">
@@ -155,7 +192,10 @@ export function MyBookings() {
                                 <p><b>CheckIn</b> : {booking.fromdate}</p>
                                 <p><b>CheckOut</b> : {booking.todate}</p>
                                 <p><b>Amount</b>: {booking.totalamount}</p>
-                                <p><b>Status</b> : {booking.status === 'booked' ? 'CONFIRMED' : 'CANCELLED'}</p>
+                                <p><b>Status</b>: {booking.status === 'booked' ? 'CONFIRMED' : 'CANCELLED'}</p>
+                                <div className="text-right">
+                                    <button className="btn btn-secondary" onClick={() => { cancelBooking(booking._id, booking.roomid) }}>Cancel Booking</button>
+                                </div>
                             </div>
                         );
                     }))}
@@ -164,7 +204,6 @@ export function MyBookings() {
         </div>
     );
 }
-
 
 
 

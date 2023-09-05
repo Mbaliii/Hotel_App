@@ -5,6 +5,7 @@ import Error from '../components/Error';
 import moment from 'moment';
 import { useParams } from 'react-router-dom';
 import StripeCheckout from 'react-stripe-checkout';
+import Swal from 'sweetalert2';
 
 
 
@@ -70,10 +71,15 @@ function BookingScreen() {
             token
         };
         try {
+            setLoading(true);
             const result = await axios.post('http://localhost:5000/api/bookings/bookroom', bookingDetails);
+            setLoading(false)
+            Swal.fire('Congratulations you room is booked sucessfully', 'success')``
             console.log(result);
 
         } catch (error) { }
+        setLoading(false)
+        Swal.fire('Congratulations', 'Something went wrong', error)
 
     }
 

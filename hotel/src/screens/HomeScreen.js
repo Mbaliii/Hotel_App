@@ -19,6 +19,9 @@ function HomeScreen() {
     const [todate, setToDate] = useState(null);
     const [duplicaterooms, setDuplicateRooms] = useState([]);
 
+
+    const [searchkey, setsearchkey] = useState('')
+    const [type, settype] = useState('all');
     useEffect(() => {
         async function fetchRooms() {
             try {
@@ -59,6 +62,21 @@ function HomeScreen() {
 
         setRooms(filteredRooms);
     }
+    function filterBySearch() {
+        const temprooms = duplicaterooms.filter(room => room.name.toLowerCase().includes(searchkey.toLowerCase()))
+        setRooms(temprooms)
+    }
+
+    function filterByType(e) {
+        settype(e)
+        if (e !== 'all') {
+            const temprooms = duplicaterooms.filter(room => room.type.toLowerCase() === e.toLowerCase())
+            setRooms(temprooms)
+        }
+        else{
+            setRooms(duplicaterooms)
+        }
+    }
 
     return (
         <div className='container'>
@@ -68,11 +86,12 @@ function HomeScreen() {
                 </div>
 
                 <div className='col-md-5'>
-                    <input type='text' className='form-control' placeholder='search rooms' />
+                    <input type='text' className='form-control' placeholder='search rooms'
+                        value={searchkey} onChange={(e) => { setsearchkey(e.target.value) }} onKeyUp={filterBySearch} />
                 </div>
 
                 <div className='col-md-3'>
-                    <select className='form-control'>
+                    <select className='form-control' value={type} onChange={(e) => { filterByType(e.target.value) }}>
                         <option value='all'>ALL</option>
                         <option value='delux'>Delux</option>
                         <option value='non-delux'>Non-Delux</option>
@@ -84,14 +103,12 @@ function HomeScreen() {
             <div className='row justify-content-center mt-3'>
                 {loading ? (
                     <Loader />
-                ) : rooms.length > 0 ? (
+                ) : (
                     rooms.map((room, index) => (
                         <div className='col-md-9 mt-2' key={index}>
                             <Room room={room} fromdate={fromdate} todate={todate} />
                         </div>
                     ))
-                ) : (
-                    <Error />
                 )}
             </div>
         </div>

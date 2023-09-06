@@ -6,6 +6,8 @@ import Loader from "../components/Loader";
 const { TabPane } = Tabs;
 
 
+
+// admin panel
 function AdminScreen() {
     useEffect(() => {
         if (JSON.parse(localStorage.getItem('currentUser')).isAdmin) {
@@ -23,7 +25,7 @@ function AdminScreen() {
                     <Rooms />
                 </TabPane>
                 <TabPane tab='Add Room' key='3'>
-                    <h1>Add Room</h1>
+                    <Addroom />
                 </TabPane>
                 <TabPane tab='Users' key='4'>
                     <Users />
@@ -35,6 +37,8 @@ function AdminScreen() {
 
 export default AdminScreen;
 
+
+// bookings list
 export function Bookings() {
     const [bookings, setBookings] = useState([]);
     const [loading, setloading] = useState(true);
@@ -90,6 +94,8 @@ export function Bookings() {
 }
 
 
+
+// rooms screen component
 
 export function Rooms() {
     const [rooms, setRooms] = useState([]);
@@ -148,6 +154,7 @@ export function Rooms() {
 }
 
 
+// users list component
 export function Users() {
     const [users, setusers] = useState([]);
     const [loading, setloading] = useState(true);
@@ -194,6 +201,79 @@ export function Users() {
                         }))}
                     </tbody>
                 </table>
+            </div>
+        </div>
+    )
+}
+
+
+// add room component
+export function Addroom() {
+
+    const [name, setname] = useState('');
+    const [rentpernight, setrentpernight] = useState();
+    const [maxcount, setmaxcount] = useState();
+    const [description, setdescriptions] = useState();
+    const [phonenumber, setphonenumber] = useState();
+    const [imageurl1, setimageurl1] = useState();
+    const [imageurl2, setimageurl2] = useState();
+    const [imageurl3, setimageurl3] = useState();
+    const [type, settype] = useState();
+
+    async function addroom() {
+        const newroom = {
+            name,
+            rentpernight,
+            maxcount,
+            description,
+            phonenumber,
+            type,
+            imageurls: [imageurl1, imageurl2, imageurl3]
+        }
+        try {
+
+            const result = (await axios.post('http://localhost:5000/api/rooms/addroom', newroom)).data
+            console.log(result)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
+    return (
+        <div className="row">
+            <div className="col-md-5">
+                <input type='text' className="form-control" placeholder="room name"
+                    value={name} onChange={(e) => { setname(e.target.value) }} />
+
+                <input type='text' className="form-control" placeholder="rent per night"
+                    value={rentpernight} onChange={(e) => { setrentpernight(e.target.value) }} />
+
+                <input type='text' className="form-control" placeholder="max count"
+                    value={maxcount} onChange={(e) => { setmaxcount(e.target.value) }} />
+
+                <input type='text' className="form-control" placeholder="description"
+                    value={description} onChange={(e) => { setdescriptions(e.target.value) }} />
+
+                <input type='text' className="form-control" placeholder="phone number"
+                    value={phonenumber} onChange={(e) => { setphonenumber(e.target.value) }} />
+            </div>
+
+            <div className="col-md-5">
+                <input type='text' className="form-control" placeholder="type"
+                    value={type} onChange={(e) => { settype(e.target.value) }} />
+
+                <input type='text' className="form-control" placeholder="Image URL 1"
+                    value={imageurl1} onChange={(e) => { setimageurl1(e.target.value) }} />
+
+                <input type='text' className="form-control" placeholder="Image URL 2"
+                    value={imageurl2} onChange={(e) => { setimageurl2(e.target.value) }} />
+
+                <input type='text' className="form-control" placeholder="Image URL 3"
+                    value={imageurl3} onChange={(e) => { setimageurl3(e.target.value) }} />
+                <div className="text-right">
+                    <button className="btn btn-secondary" onClick={addroom}>Add Room</button>
+                </div>
             </div>
         </div>
     )

@@ -30,11 +30,22 @@ router.post('/getbookingsbyuserid', async (req, res) => {
 
     console.log(userid)
     try {
-        const bookings = await Booking.find({ userid }); 
+        const bookings = await Booking.find({ userid });
         res.send(bookings);
     } catch (error) {
         return res.status(400).json({ error: error.message });
     }
 });
 
+
+router.post('/addroom', async (req, res) => {
+    try {
+        const newroom = new Room(req.body)
+        await newroom.save()
+
+        res.send('New Room Added Sucessfully')
+    } catch (error) {
+        return res.status(400).json({ error })
+    }
+})
 module.exports = router;

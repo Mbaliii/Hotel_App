@@ -7,9 +7,6 @@ import { useParams } from 'react-router-dom';
 import StripeCheckout from 'react-stripe-checkout';
 import Swal from 'sweetalert2';
 
-
-
-
 function BookingScreen() {
     const { roomid, fromdate, todate } = useParams();
     const fromdateFormatted = moment(fromdate, 'DD-MM-YYYY');
@@ -22,6 +19,9 @@ function BookingScreen() {
     const [room, setRoom] = useState(null);
 
     useEffect(() => {
+        if (!localStorage.getItem('currentUser')) {
+            window.location.href = '/login';
+        }
         const fetchRoomData = async () => {
             try {
                 setLoading(true);
@@ -46,7 +46,6 @@ function BookingScreen() {
     //         fromdate: fromdate,
     //         // new Date()
     //         todate: todate,
-
     //         totalamount,
     //         totaldays
     //     };
@@ -56,7 +55,7 @@ function BookingScreen() {
 
     //     } catch (error) { }
     // }
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'))._id
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'))._id;
 
     async function onToken(token) {
         console.log(token);
@@ -74,18 +73,16 @@ function BookingScreen() {
         try {
             setLoading(true);
             const result = await axios.post('http://localhost:5000/api/bookings/bookroom', bookingDetails);
-            setLoading(false)
-            Swal.fire('Congratulations you room is booked sucessfully', 'success').then(result => {
-                window.location.href='/bookings'
-            })
+            setLoading(false);
+            Swal.fire('Congratulations, your room is booked successfully', 'success').then(result => {
+                window.location.href = '/bookings';
+            });
             console.log(result);
 
         } catch (error) {
-            setLoading(false)
-            Swal.fire('OOPS!!! something went wrong', 'Something went wrong', 'error')
+            setLoading(false);
+            Swal.fire('OOPS!!! Something went wrong', 'Something went wrong', 'error');
         }
-
-
     }
 
     return (
@@ -137,9 +134,3 @@ function BookingScreen() {
 }
 
 export default BookingScreen;
-
-
-
-
-
-// onClick={(room) => bookRoom(room)}

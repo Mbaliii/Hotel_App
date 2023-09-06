@@ -1,11 +1,16 @@
 import React from "react";
+import './contact.css';
 
-function Contact () {
+function Contact() {
     return (
-        <div>
-            <h1>Contact</h1>
-        </div>
-    )
-};
+        <div className="contact-container">
+            <div className="row justify-content-center mt-5">
+                <h1>
+                    <span>Contact Us</span>
+                </h1>
+            </div>
+        </div >
+    );
+}
 
-export default Contact
+export default Contact;

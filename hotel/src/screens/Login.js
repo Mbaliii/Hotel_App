@@ -21,10 +21,10 @@ function Register() {
             const result = (await axios.post('http://localhost:5000/api/users/login', user)).data
             setloading(false)
             localStorage.setItem('currentUser', JSON.stringify(result));
-            window.location.href='/home'
+            window.location.href = '/home'
 
         } catch (error) {
-            console.log( error)
+            console.log(error)
             setloading(false)
             seterror(true)
         }
@@ -32,16 +32,19 @@ function Register() {
 
 
     return (
-        <div>
-            {loading && (<Loader/>)}
+        <div className='back' style={{
+            backgroundImage: `url("https://digital.ihg.com/is/image/ihg/ihgor-member-rate-web-offers-1440x720")`
+        }}>
+            {loading && (<Loader />)}
             <div className="row justify-content-center mt-5">
-                <div className="col-md-5">
-                    {error && (<Error message = "Invalid credentials"/>)}
+                <div >
+                    {/* className="col-md-5" */}
+                    {error && (<Error message="Invalid credentials" />)}
                     <div classname="shadow-lg p-3 mb-5 bg-white rounded">
                         <h1> Login</h1>
                         <input type="text" className="form-control shadow-lg p-3 mb-5 bg-white rounded" placeholder="email" value={email} onChange={(e) => { setemail(e.target.value) }} />
                         <input type="text" className="form-control shadow-lg p-3 mb-5 bg-white rounded" placeholder="password" value={password} onChange={(e) => { setpassword(e.target.value) }} />
-                        <button className="btn btn-outline-success shadow-lg p-3 mb-5 bg-white rounded" onClick={login}>Login</button>
+                        <button className="btn btn-outline" onClick={login}>Login</button>
                     </div>
                 </div>
             </div>

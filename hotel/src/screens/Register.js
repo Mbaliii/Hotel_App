@@ -52,20 +52,23 @@ function Register() {
 
 
     return (
-        <div>
+        <div className='back' style={{
+            backgroundImage: `url("https://digital.ihg.com/is/image/ihg/ihgor-member-rate-web-offers-1440x720")`
+        }}>
             {loading && (<Loader />)}
             {error && (<Error />)}
 
             <div className="row justify-content-center mt-5">
-                <div className="col-md-5">
+                <div>
+                    {/* this belong above this component className="col-md-5" */}
                     {success && (<Success message={'Registration success'} />)}
                     <div classname="shadow-lg p-3 mb-5 bg-white rounded">
                         <h1>Register</h1>
-                        <input type="text" className="form-control shadow-lg p-3 mb-5 bg-white rounded" placeholder="name" value={name} onChange={(e) => { setname(e.target.value) }} />
+                        <input type="text" className="form-control shadow-lg p-6 mb-5 bg-white round" placeholder="name" value={name} onChange={(e) => { setname(e.target.value) }} />
                         <input type="text" className="form-control shadow-lg p-3 mb-5 bg-white rounded" placeholder="email" value={email} onChange={(e) => { setemail(e.target.value) }} />
                         <input type="text" className="form-control shadow-lg p-3 mb-5 bg-white rounded" placeholder="password" value={password} onChange={(e) => { setpassword(e.target.value) }} />
                         <input type="text" className="form-control shadow-lg p-3 mb-5 bg-white rounded" placeholder="confirm password" value={cpassword} onChange={(e) => { setcpassword(e.target.value) }} />
-                        <button className="btn btn-outline-success shadow-lg p-3 mb-5 bg-white rounded" onClick={register}>Register</button>
+                        <button className="btn btn-outline" onClick={register}>Register</button>
                     </div>
                 </div>
             </div>

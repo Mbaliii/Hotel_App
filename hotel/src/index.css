@@ -91,3 +91,8 @@ h2 {
   background-color: darkgrey !important;
   height: 100vh;
 }
+.back{
+  height: 100vh;
+  background-size: cover;
+  overflow: hidden;
+}

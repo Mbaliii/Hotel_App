@@ -14,7 +14,7 @@ function AdminScreen() {
                     <Bookings />
                 </TabPane>
                 <TabPane tab='Rooms' key='2'>
-                    <h1>Rooms</h1>
+                    <Rooms />
                 </TabPane>
                 <TabPane tab='Add Room' key='3'>
                     <h1>Add Room</h1>
@@ -64,17 +64,79 @@ export function Bookings() {
                             <th>To</th>
                             <th>Status</th>
                         </tr>
-                        <tbody>
-                            {bookings.length &&  (bookings.map(booking => {
-                                return <tr>
-                                    <td>{booking._id}</td>
-                                    <td>{booking.userid}</td>
-                                    <td>{booking.room}</td>
-                                </tr>
-                            }))}
-                        </tbody>
                     </thead>
+                    <tbody>
+                        {bookings.length && (bookings.map(booking => {
+                            return <tr>
+                                <td>{booking._id}</td>
+                                <td>{booking.userid}</td>
+                                <td>{booking.room}</td>
+                                <td>{booking.fromdate}</td>
+                                <td>{booking.todate}</td>
+                                <td>{booking.status}</td>
+                            </tr>
+                        }))}
+                    </tbody>
                 </table>
+            </div>
+        </div>
+    )
+}
+
+
+
+export function Rooms() {
+    const [rooms, setRooms] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get("/api/rooms/getallrooms");
+                setRooms(response.data);
+                setLoading(false);
+            } catch (error) {
+                console.error(error);
+                setLoading(false);
+                setError(error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    return (
+        <div className="row">
+            <div className="col-md-12">
+                <h1>Rooms</h1>
+                {loading ? (<Loader />) : (
+                    <table className="table table-bordered table-dark">
+                        <thead className="bs">
+                            <tr>
+                                <th>Room ID</th>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Rent Per Night</th>
+                                <th>Max Count</th>
+                                <th>Phone Number</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {rooms.map(room => (
+                                <tr key={room._id}>
+                                    <td>{room._id}</td>
+                                    <td>{room.name}</td>
+                                    <td>{room.type}</td>
+                                    <td>{room.rentpernight}</td>
+                                    <td>{room.maxcount}</td>
+                                    <td>{room.phonenumber}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                )}
+                {/* {error && <Error />} */}
             </div>
         </div>
     )

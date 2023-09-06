@@ -7,6 +7,8 @@ import Register from './screens/Register';
 import BookingScreen from './screens/BookingScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import AdminScreen from './screens/AdminScreen';
+import { Landingscreen } from './screens/Landingscreen';
+import Contact from './screens/Contact';
 
 
 function App() {
@@ -21,6 +23,8 @@ function App() {
           <Route path='login' element={<Login />} />
           <Route path='/profile' element={<ProfileScreen />} />
           <Route path='/admin' element={<AdminScreen />} />
+          <Route path='/' element={<Landingscreen />} />
+          <Route path='/contact' element={<Contact />} />
         </Routes>
       </BrowserRouter>
     </div>

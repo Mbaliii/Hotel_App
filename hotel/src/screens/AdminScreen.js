@@ -2,6 +2,7 @@ import { Tabs } from "antd";
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import Loader from "../components/Loader";
+import Swal from 'sweetalert2';
 
 const { TabPane } = Tabs;
 
@@ -210,6 +211,8 @@ export function Users() {
 // add room component
 export function Addroom() {
 
+    const [loading, setloading] = useState(false)
+    const [error, seterror] = useState();
     const [name, setname] = useState('');
     const [rentpernight, setrentpernight] = useState();
     const [maxcount, setmaxcount] = useState();
@@ -231,18 +234,26 @@ export function Addroom() {
             imageurls: [imageurl1, imageurl2, imageurl3]
         }
         try {
-
+            setloading(true)
             const result = (await axios.post('http://localhost:5000/api/rooms/addroom', newroom)).data
             console.log(result)
+            setloading(false)
+            Swal.fire('Congrats', 'Your new room has been added', 'success').then(result => {
+                window.location.href = '/home'
+            })
         } catch (error) {
             console.log(error);
+            setloading(false)
+            Swal.fire('OOPS', 'something went wrong', 'error')
         }
     }
 
 
     return (
         <div className="row">
+
             <div className="col-md-5">
+                {loading && <Loader />}
                 <input type='text' className="form-control" placeholder="room name"
                     value={name} onChange={(e) => { setname(e.target.value) }} />
 

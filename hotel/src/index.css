@@ -86,4 +86,8 @@ h2 {
 
 .ant-picker-input input{
   border: none !important;
-} 
+}
+.landing{
+  background-color: darkgrey !important;
+  height: 100vh;
+}

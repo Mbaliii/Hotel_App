@@ -5,7 +5,13 @@ import Loader from "../components/Loader";
 
 const { TabPane } = Tabs;
 
+
 function AdminScreen() {
+    useEffect(() => {
+        if (JSON.parse(localStorage.getItem('currentUser')).isAdmin) {
+            window.location.href = '/home'
+        };
+    }, [])
     return (
         <div className="mt-3 ml-3 mr-3 bs">
             <h1 className="text-center"><b>Admin Panel</b></h1>
@@ -20,7 +26,7 @@ function AdminScreen() {
                     <h1>Add Room</h1>
                 </TabPane>
                 <TabPane tab='Users' key='4'>
-                    <h1>Users</h1>
+                    <Users />
                 </TabPane>
             </Tabs>
         </div>
@@ -136,7 +142,58 @@ export function Rooms() {
                         </tbody>
                     </table>
                 )}
-                {/* {error && <Error />} */}
+            </div>
+        </div>
+    )
+}
+
+
+export function Users() {
+    const [users, setusers] = useState([]);
+    const [loading, setloading] = useState(true);
+    const [error, seterror] = useState();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get("/api/users/getallusers");
+                setusers(response.data);
+                setloading(false);
+            } catch (error) {
+                console.error(error);
+                setloading(false);
+                seterror(error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    return (
+        <div className="row">
+            <div className="col-md-12">
+                <h1>Users</h1>
+                {loading && <Loader />}
+                <table className="table table-dark table-bordered">
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>User Name</th>
+                            <th>User Email</th>
+                            <th>Is Admin</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {users && (users.map(users => {
+                            return <tr>
+                                <td>{users._id}</td>
+                                <td>{users.name}</td>
+                                <td>{users.email}</td>
+                                <td>{users.isAdmin ? 'YES' : 'NO'}</td>
+                            </tr>
+                        }))}
+                    </tbody>
+                </table>
             </div>
         </div>
     )

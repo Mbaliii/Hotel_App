@@ -33,7 +33,7 @@ function Register() {
 
     return (
         <div className='back' style={{
-            backgroundImage: `url("https://digital.ihg.com/is/image/ihg/ihgor-member-rate-web-offers-1440x720")`
+            backgroundImage: `url("https://southbeachsa.com/wp-content/uploads/2020/12/south-beach-banner-4.jpg")`
         }}>
             {loading && (<Loader />)}
             <div className="row justify-content-center mt-5">

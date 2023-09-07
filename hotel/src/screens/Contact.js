@@ -9,6 +9,11 @@ function Contact() {
                     <span>Contact Us</span>
                 </h1>
             </div>
+
+            <div >
+                <h1>Reception</h1>
+                <h1>+27 11 987 5463</h1>
+            </div>
         </div >
     );
 }

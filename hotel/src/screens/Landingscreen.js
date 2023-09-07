@@ -6,7 +6,7 @@ export function Landingscreen() {
         <div className="row landing">
             <div className="col-md-12 text-center">
                 <div className='back' style={{
-                    backgroundImage: `url("https://images.moneycontrol.com/static-mcnews/2021/04/Roof-top-pool-2-taj-goa-770x433.jpg?impolicy=website&width=770&height=431")`
+                    backgroundImage: `url("https://digital.ihg.com/is/image/ihg/ihgor-member-rate-web-offers-1440x720")`
                 }}>
                     <h2 style={{ color: 'white' }}> Welcome to Belmound Hotel</h2>
                     <h1 style={{ color: 'white' }}>A new version of Luxury</h1>

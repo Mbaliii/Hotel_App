@@ -6,7 +6,10 @@ function NavBar() {
     function logout() {
         localStorage.removeItem('currentUser')
         window.location.href = '/login'
+    
     }
+
+    
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">

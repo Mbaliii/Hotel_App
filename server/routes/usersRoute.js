@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const User = require("../models/user");
 
+
+// Register
 router.post("/register", async (req, res) => {
 
     const newuser = new User({
@@ -17,7 +19,7 @@ router.post("/register", async (req, res) => {
     }
 });
 
-
+// Login
 router.post("/login", async (req, res) => {
     const { email, password } = req.body
 
@@ -42,6 +44,7 @@ router.post("/login", async (req, res) => {
 });
 
 
+// get users function
 router.get("/getallusers", async (req, res) => {
     try {
         const users = await User.find()
@@ -52,6 +55,51 @@ router.get("/getallusers", async (req, res) => {
     }
 });
 
+
+
+// delete user function 
+router.delete('/deleteuser/:userId', async (req, res) => {
+    const { userId } = req.params;
+
+    try {
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        await User.findByIdAndRemove(userId);
+
+        return res.json({ message: 'User deleted successfully' });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Failed to delete user' });
+    }
+});
+
+
+// Update User
+router.put('/updateuser/:userId', async (req, res) => {
+    const { userId } = req.params;
+    const updatedUserData = req.body;
+
+    try {
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        Object.assign(user, updatedUserData);
+
+        await user.save();
+
+        return res.status(200).json({ message: 'User updated successfully', user });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Failed to update user' });
+    }
+});
 
 
 module.exports = router

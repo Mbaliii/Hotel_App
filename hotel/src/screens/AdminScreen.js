@@ -1,110 +1,108 @@
-import { Tabs } from "antd";
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
+import { Tabs } from "antd";
+import axios from "axios";
 import Loader from "../components/Loader";
 import Swal from 'sweetalert2';
+import { EditUser } from "./EditUser";
 
 const { TabPane } = Tabs;
 
-
-
-// admin panel
 function AdminScreen() {
-    useEffect(() => {
-        if (JSON.parse(localStorage.getItem('currentUser')).isAdmin) {
-            window.location.href = '/home'
-        };
-    }, [])
+
+    // useEffect(() => {
+    //     if (!JSON.parse(localStorage.getItem("currentUser")).isAdmin) {
+    //         window.location.href = '/home'
+    //     }
+    // })
     return (
         <div className="mt-3 ml-3 mr-3 bs">
-            <h1 className="text-center"><b>Admin Panel</b></h1>
-            <Tabs centered defaultActiveKey="1" >
-                <TabPane tab='Bookings' key='1'>
+            <h2 className="text-center" style={{ fontSize: '30px' }}><b>Admin Panel</b></h2>
+            <Tabs defaultActiveKey='1'>
+                <TabPane tab='Bookings' key="1">
                     <Bookings />
                 </TabPane>
-                <TabPane tab='Rooms' key='2'>
+                <TabPane tab='Rooms' key="2">
                     <Rooms />
                 </TabPane>
-                <TabPane tab='Add Room' key='3'>
-                    <Addroom />
+                <TabPane tab='Add Room' key="3">
+                    <h1>Add Room</h1>
                 </TabPane>
-                <TabPane tab='Users' key='4'>
+                <TabPane tab='Users' key="4">
                     <Users />
                 </TabPane>
             </Tabs>
         </div>
     )
-}
+};
 
 export default AdminScreen;
 
-
-// bookings list
 export function Bookings() {
     const [bookings, setBookings] = useState([]);
-    const [loading, setloading] = useState(true);
-    const [error, seterror] = useState()
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
     useEffect(() => {
-        const fetchData = async () => {
+        async function fetchData() {
             try {
                 const response = await axios.get("/api/bookings/getallbookings");
                 setBookings(response.data);
-                setloading(false)
+                setLoading(false);
             } catch (error) {
                 console.error(error);
-                setloading(false);
-                seterror(error)
+                setLoading(false);
+                setError(error);
             }
-        };
+        }
 
         fetchData();
     }, []);
 
     return (
         <div className="row">
-            <div className="col-md-10">
-                <h1>Bookings Screen</h1>
-                {loading && (<Loader />)}
-                <table className="table table-borded table-dark">
-                    <thead className="bs">
-                        <tr>
-                            <th>Booking ID</th>
-                            <th>User ID</th>
-                            <th>Room</th>
-                            <th>From</th>
-                            <th>To</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {bookings.length && (bookings.map(booking => {
-                            return <tr>
-                                <td>{booking._id}</td>
-                                <td>{booking.userid}</td>
-                                <td>{booking.room}</td>
-                                <td>{booking.fromdate}</td>
-                                <td>{booking.todate}</td>
-                                <td>{booking.status}</td>
+            <div className="col-md-12">
+                <h1>Bookings</h1>
+                {loading ? (
+                    <Loader />
+                ) : (
+                    <table className="table table-bordered table-dark">
+                        <thead className="bs">
+                            <tr>
+                                <th>Booking ID</th>
+                                <th>User ID</th>
+                                <th>Room</th>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Status</th>
                             </tr>
-                        }))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {bookings.map(booking => (
+                                <tr key={booking._id}>
+                                    <td>{booking._id}</td >
+                                    <td>{booking.userid}</td>
+                                    <td>{booking.room}</td>
+                                    <td>{booking.fromdate}</td>
+                                    <td>{booking.todate}</td>
+                                    <td>{booking.status}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                )}
             </div>
         </div>
     )
 }
 
-
-
-// rooms screen component
-
+// ROOMS FUNCTION
 export function Rooms() {
     const [rooms, setRooms] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchData = async () => {
+        async function fetchData() {
             try {
                 const response = await axios.get("/api/rooms/getallrooms");
                 setRooms(response.data);
@@ -114,7 +112,7 @@ export function Rooms() {
                 setLoading(false);
                 setError(error);
             }
-        };
+        }
 
         fetchData();
     }, []);
@@ -123,7 +121,9 @@ export function Rooms() {
         <div className="row">
             <div className="col-md-12">
                 <h1>Rooms</h1>
-                {loading ? (<Loader />) : (
+                {loading ? (
+                    <Loader />
+                ) : (
                     <table className="table table-bordered table-dark">
                         <thead className="bs">
                             <tr>
@@ -155,137 +155,89 @@ export function Rooms() {
 }
 
 
-// users list component
 export function Users() {
-    const [users, setusers] = useState([]);
-    const [loading, setloading] = useState(true);
-    const [error, seterror] = useState();
+    const [users, setUsers] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [editingUser, setEditingUser] = useState(null);
 
     useEffect(() => {
-        const fetchData = async () => {
+        async function fetchData() {
             try {
                 const response = await axios.get("/api/users/getallusers");
-                setusers(response.data);
-                setloading(false);
+                setUsers(response.data);
+                setLoading(false);
             } catch (error) {
                 console.error(error);
-                setloading(false);
-                seterror(error);
+                setLoading(false);
+                setError(error);
             }
-        };
+        }
 
         fetchData();
     }, []);
+
+    const handleDeleteUser = async (userId) => {
+        try {
+            await axios.delete(`/api/users/deleteuser/${userId}`);
+            setUsers(users.filter(user => user._id !== userId));
+            Swal.fire('Success', 'User deleted successfully', 'success');
+
+        } catch (error) {
+            console.error(error);
+            Swal.fire('Error', 'Failed to delete user', 'error');
+        }
+    };
+
+    const handleEditUser = (user) => {
+        setEditingUser(user);
+    };
 
     return (
         <div className="row">
             <div className="col-md-12">
                 <h1>Users</h1>
-                {loading && <Loader />}
-                <table className="table table-dark table-bordered">
-                    <thead>
-                        <tr>
-                            <th>User ID</th>
-                            <th>User Name</th>
-                            <th>User Email</th>
-                            <th>Is Admin</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {users && (users.map(users => {
-                            return <tr>
-                                <td>{users._id}</td>
-                                <td>{users.name}</td>
-                                <td>{users.email}</td>
-                                <td>{users.isAdmin ? 'YES' : 'NO'}</td>
+                {loading ? (
+                    <Loader />
+                ) : (
+                    <table className="table table-dark table-bordered">
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>User Name</th>
+                                <th>User Email</th>
+                                <th>Is Admin</th>
+                                <th>Action</th>
                             </tr>
-                        }))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {users.map(user => (
+                                <tr key={user._id}>
+                                    <td>{user._id}</td>
+                                    <td>{user.name}</td>
+                                    <td>{user.email}</td>
+                                    <td>{user.isAdmin ? 'YES' : 'NO'}</td>
+                                    <td>
+                                        <button onClick={() => handleDeleteUser(user._id)}>Delete</button>
+                                        <button onClick={() => handleEditUser(user)}>Edit</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                )}
+                {editingUser && (
+                    <EditUser user={editingUser} onEdit={(updatedUser) => {
+                        setEditingUser(null);
+                        const updatedUsers = users.map(user =>
+                            user._id === updatedUser._id ? updatedUser : user
+                        );
+                        setUsers(updatedUsers);
+                    }} />
+                )}
+
             </div>
         </div>
     )
 }
 
-
-// add room component
-export function Addroom() {
-
-    const [loading, setloading] = useState(false)
-    const [error, seterror] = useState();
-    const [name, setname] = useState('');
-    const [rentpernight, setrentpernight] = useState();
-    const [maxcount, setmaxcount] = useState();
-    const [description, setdescriptions] = useState();
-    const [phonenumber, setphonenumber] = useState();
-    const [imageurl1, setimageurl1] = useState();
-    const [imageurl2, setimageurl2] = useState();
-    const [imageurl3, setimageurl3] = useState();
-    const [type, settype] = useState();
-
-    async function addroom() {
-        const newroom = {
-            name,
-            rentpernight,
-            maxcount,
-            description,
-            phonenumber,
-            type,
-            imageurls: [imageurl1, imageurl2, imageurl3]
-        }
-        try {
-            setloading(true)
-            const result = (await axios.post('http://localhost:5000/api/rooms/addroom', newroom)).data
-            console.log(result)
-            setloading(false)
-            Swal.fire('Congrats', 'Your new room has been added', 'success').then(result => {
-                window.location.href = '/home'
-            })
-        } catch (error) {
-            console.log(error);
-            setloading(false)
-            Swal.fire('OOPS', 'something went wrong', 'error')
-        }
-    }
-
-
-    return (
-        <div className="row">
-
-            <div className="col-md-5">
-                {loading && <Loader />}
-                <input type='text' className="form-control" placeholder="room name"
-                    value={name} onChange={(e) => { setname(e.target.value) }} />
-
-                <input type='text' className="form-control" placeholder="rent per night"
-                    value={rentpernight} onChange={(e) => { setrentpernight(e.target.value) }} />
-
-                <input type='text' className="form-control" placeholder="max count"
-                    value={maxcount} onChange={(e) => { setmaxcount(e.target.value) }} />
-
-                <input type='text' className="form-control" placeholder="description"
-                    value={description} onChange={(e) => { setdescriptions(e.target.value) }} />
-
-                <input type='text' className="form-control" placeholder="phone number"
-                    value={phonenumber} onChange={(e) => { setphonenumber(e.target.value) }} />
-            </div>
-
-            <div className="col-md-5">
-                <input type='text' className="form-control" placeholder="type"
-                    value={type} onChange={(e) => { settype(e.target.value) }} />
-
-                <input type='text' className="form-control" placeholder="Image URL 1"
-                    value={imageurl1} onChange={(e) => { setimageurl1(e.target.value) }} />
-
-                <input type='text' className="form-control" placeholder="Image URL 2"
-                    value={imageurl2} onChange={(e) => { setimageurl2(e.target.value) }} />
-
-                <input type='text' className="form-control" placeholder="Image URL 3"
-                    value={imageurl3} onChange={(e) => { setimageurl3(e.target.value) }} />
-                <div className="text-right">
-                    <button className="btn btn-secondary" onClick={addroom}>Add Room</button>
-                </div>
-            </div>
-        </div>
-    )
-}

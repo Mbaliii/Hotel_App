@@ -37,24 +37,7 @@ function BookingScreen() {
 
         fetchRoomData();
     }, [roomid, totaldays]);
-
-    // async function bookRoom() {
-    //     const bookingDetails = {
-    //         room: room.name,
-    //         roomid: room._id,
-    //         // userid: JSON.parse(localStorage.getItem('currentUser'))._id,
-    //         fromdate: fromdate,
-    //         // new Date()
-    //         todate: todate,
-    //         totalamount,
-    //         totaldays
-    //     };
-    //     try {
-    //         const result = await axios.post('http://localhost:5000/api/bookings/bookroom', bookingDetails);
-    //         console.log(result);
-
-    //     } catch (error) { }
-    // }
+    
     const currentUser = JSON.parse(localStorage.getItem('currentUser'))._id;
 
     async function onToken(token) {

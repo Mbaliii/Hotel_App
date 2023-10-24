@@ -9,6 +9,8 @@ const { TabPane } = Tabs;
 
 function AdminScreen() {
 
+    // Booking List Component
+
     // useEffect(() => {
     //     if (!JSON.parse(localStorage.getItem("currentUser")).isAdmin) {
     //         window.location.href = '/home'
@@ -25,7 +27,7 @@ function AdminScreen() {
                     <Rooms />
                 </TabPane>
                 <TabPane tab='Add Room' key="3">
-                    <h1>Add Room</h1>
+                    <Addroom />
                 </TabPane>
                 <TabPane tab='Users' key="4">
                     <Users />
@@ -37,6 +39,7 @@ function AdminScreen() {
 
 export default AdminScreen;
 
+// Booking Screen
 export function Bookings() {
     const [bookings, setBookings] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -154,6 +157,7 @@ export function Rooms() {
     )
 }
 
+// USERS FUNCTION
 
 export function Users() {
     const [users, setUsers] = useState([]);
@@ -241,3 +245,47 @@ export function Users() {
     )
 }
 
+
+
+export function Addroom() {
+    const [name, setName] = useState("");
+    const [rentPerNight, setRentPerNight] = useState("");
+    const [maxCount, setMaxCount] = useState("");
+    const [description, setDescription] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
+    const [imageURL1, setImageURL1] = useState("");
+    const [imageURL2, setImageURL2] = useState("");
+    const [imageURL3, setImageURL3] = useState("");
+    const [type, setType] = useState("");
+
+    return (
+        <div className="row">
+            <div className="col-md-5">
+                <input type="text" className="form-control" placeholder="Room Name" value={name} onChange={(e) => setName(e.target.value)} />
+
+                <input type="text" className="form-control" placeholder="Rent Per Night" value={rentPerNight} onChange={(e) => setRentPerNight(e.target.value)} />
+
+                <input type="text" className="form-control" placeholder="Max Count" value={maxCount} onChange={(e) => setMaxCount(e.target.value)} />
+
+                <input type="text" className="form-control" placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
+
+                <input type="text" className="form-control" placeholder="Phone Number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+
+            </div>
+
+            <div className="col-md-5">
+                <input type="text" className="form-control" placeholder="Type" value={type} onChange={(e) => setType(e.target.value)} />
+
+                <input type="text" className="form-control" placeholder="Image URL 1" value={imageURL1} onChange={(e) => setImageURL1(e.target.value)} />
+
+                <input type="text" className="form-control" placeholder="Image URL 2" value={imageURL2} onChange={(e) => setImageURL2(e.target.value)} />
+
+                <input type="text" className="form-control" placeholder="Image URL 3" value={imageURL3} onChange={(e) => setImageURL3(e.target.value)} />
+
+                <div className="text-right">
+                    <button className="btn btn-primary mt-2">Add Room</button>
+                </div>
+            </div>
+        </div>
+    );
+}

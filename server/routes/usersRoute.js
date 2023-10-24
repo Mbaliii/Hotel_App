@@ -24,6 +24,7 @@ router.post("/login", async (req, res) => {
     const { email, password } = req.body
 
     try {
+        error
         const user = await User.findOne({ email: email, password: password })
         if (user) {
             const temp = {
@@ -100,6 +101,32 @@ router.put('/updateuser/:userId', async (req, res) => {
         return res.status(500).json({ message: 'Failed to update user' });
     }
 });
+
+
+// addrooms
+
+router.post("/addroom", async (req, res) => {
+    try {
+        const newRoom = new Rooms(req.body);
+        await newRoom.save();
+        res.send('New Room Added Successfully');
+    } catch (error) {
+        return res.status(400).json({ error: error.message });
+    }
+});
+
+
+router.get("/getallusers", async (req, res) => {
+    try {
+        const users = await User.find()
+        res.send(users)
+    } catch (error) {
+        return res.status(400).json({ error });
+
+    }
+});
+
+
 
 
 module.exports = router

@@ -258,32 +258,41 @@ export function Addroom() {
     const [imageURL3, setImageURL3] = useState("");
     const [type, setType] = useState("");
 
+    async function addRoom() {
+        const newRoom = {
+            name,
+            rentPerNight,
+            description,
+            phoneNumber,
+            type,
+            imageUrls: [imageURL1, imageURL2, imageURL3] 
+        };
+
+        try {
+            const result = await axios.post('/api/rooms/addroom', newRoom);
+            console.log(result);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     return (
         <div className="row">
             <div className="col-md-5">
                 <input type="text" className="form-control" placeholder="Room Name" value={name} onChange={(e) => setName(e.target.value)} />
-
                 <input type="text" className="form-control" placeholder="Rent Per Night" value={rentPerNight} onChange={(e) => setRentPerNight(e.target.value)} />
-
                 <input type="text" className="form-control" placeholder="Max Count" value={maxCount} onChange={(e) => setMaxCount(e.target.value)} />
-
                 <input type="text" className="form-control" placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
-
                 <input type="text" className="form-control" placeholder="Phone Number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
-
             </div>
 
             <div className="col-md-5">
                 <input type="text" className="form-control" placeholder="Type" value={type} onChange={(e) => setType(e.target.value)} />
-
                 <input type="text" className="form-control" placeholder="Image URL 1" value={imageURL1} onChange={(e) => setImageURL1(e.target.value)} />
-
                 <input type="text" className="form-control" placeholder="Image URL 2" value={imageURL2} onChange={(e) => setImageURL2(e.target.value)} />
-
                 <input type="text" className="form-control" placeholder="Image URL 3" value={imageURL3} onChange={(e) => setImageURL3(e.target.value)} />
-
                 <div className="text-right">
-                    <button className="btn btn-primary mt-2">Add Room</button>
+                    <button className="btn btn-primary mt-2" onClick={addRoom}>Add Room</button>
                 </div>
             </div>
         </div>

@@ -6,10 +6,10 @@ function NavBar() {
     function logout() {
         localStorage.removeItem('currentUser')
         window.location.href = '/login'
-    
+
     }
 
-    
+
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -43,7 +43,11 @@ function NavBar() {
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href="/contact">Contact</a>
-                            
+
+                        </li>
+
+                        <li className='nav-item'>
+                            <a className='nav-link' href='/admin'>Admin</a>
                         </li>
                     </>)}
                 </ul>

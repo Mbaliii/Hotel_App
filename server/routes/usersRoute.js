@@ -22,10 +22,11 @@ router.post("/register", async (req, res) => {
 // Login
 router.post("/login", async (req, res) => {
     const { email, password } = req.body
-
+    console.log("reached here");
     try {
-        error
+        // error
         const user = await User.findOne({ email: email, password: password })
+        console.log("Here, user", user)
         if (user) {
             const temp = {
                 name: user.name,
@@ -127,6 +128,48 @@ router.get("/getallusers", async (req, res) => {
 });
 
 
+// admin register
+router.post("/adminregister", async (req, res) => {
 
+    const newuser = new User({
+        name: req.body.name,
+        email: req.body.email, password: req.body.password
+    })
+    try {
+        const user = await newuser.save()
+        res.send('User Registered Successfully')
+        console.log(user)
+    } catch (error) {
+        return res.status(400).json({ error });
+    }
+});
+
+
+
+// admin login
+router.post("/adminlogin", async (req, res) => {
+    const { email, password } = req.body
+    console.log("reached here");
+    try {
+        // error
+        const user = await User.findOne({ email: email, password: password })
+        console.log("Here, user", user)
+        if (user) {
+            const temp = {
+                name: user.name,
+                email: user.email,
+                isAdmin: user.isAdmin,
+                _id: user._id,
+            }
+            res.send(temp)
+        }
+        else {
+            return res.status(400).json({ message: 'Login failed' });
+        }
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ error });
+    }
+});
 
 module.exports = router

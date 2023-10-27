@@ -3,8 +3,12 @@ import axios from 'axios';
 import Loader from "../components/Loader";
 import Error from '../components/Error';
 import Success from "../components/Success";
+import { Link } from "react-router-dom";
 
-function Register() {
+
+
+
+function AdminRegister() {
     const [name, setname] = useState("");
     const [email, setemail] = useState("");
     const [password, setpassword] = useState("");
@@ -24,7 +28,7 @@ function Register() {
             };
             try {
                 setloading(true);
-                const result = await axios.post('http://localhost:5000/api/users/register', user).data;
+                const result = await axios.post('http://localhost:5000/api/users/adminregister', user).data;
                 setloading(false);
                 setsuccess(true);
 
@@ -51,12 +55,17 @@ function Register() {
                 <div>
                     {success && (<Success message={'Registration success'} />)}
                     <div className="shadow-lg p-3 mb-5 bg-white rounded">
-                        <h1>Register</h1>
+                        <h1>Admin Register</h1>
                         <input type="text" className="form-control shadow-lg p-6 mb-5 bg-white rounded" placeholder="name" value={name} onChange={(e) => { setname(e.target.value) }} />
                         <input type="text" className="form-control shadow-lg p-3 mb-5 bg-white rounded" placeholder="email" value={email} onChange={(e) => { setemail(e.target.value) }} />
                         <input type="password" className="form-control shadow-lg p-3 mb-5 bg-white rounded" placeholder="password" value={password} onChange={(e) => { setpassword(e.target.value) }} />
                         <input type="password" className="form-control shadow-lg p-3 mb-5 bg-white rounded" placeholder="confirm password" value={cpassword} onChange={(e) => { setcpassword(e.target.value) }} />
                         <button className="btn btn-outline" onClick={register}>Register</button>
+                        {success && (
+                            <p className=" btn tb-video">
+                                Already registered? <Link to="/login">Login</Link>
+                            </p>
+                        )}
                     </div>
                 </div>
             </div>
@@ -64,4 +73,4 @@ function Register() {
     );
 }
 
-export default Register;
+export default AdminRegister;

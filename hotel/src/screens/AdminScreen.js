@@ -9,13 +9,6 @@ const { TabPane } = Tabs;
 
 function AdminScreen() {
 
-    // Booking List Component
-
-    // useEffect(() => {
-    //     if (!JSON.parse(localStorage.getItem("currentUser")).isAdmin) {
-    //         window.location.href = '/home'
-    //     }
-    // })
     return (
         <div className="mt-3 ml-3 mr-3 bs">
             <h2 className="text-center" style={{ fontSize: '30px' }}><b>Admin Panel</b></h2>

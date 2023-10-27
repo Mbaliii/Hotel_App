@@ -63,7 +63,7 @@ function AdminRegister() {
                         <button className="btn btn-outline" onClick={register}>Register</button>
                         {success && (
                             <p className=" btn tb-video">
-                                Already registered? <Link to="/login">Login</Link>
+                                Already registered? <Link to="/adminlogin">Login</Link>
                             </p>
                         )}
                     </div>

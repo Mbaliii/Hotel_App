@@ -19,7 +19,7 @@ function AdminLogin() {
             const result = (await axios.post('http://localhost:5000/api/users/adminlogin', user)).data;
             setloading(false);
             localStorage.setItem('currentUser', JSON.stringify(result));
-            window.location.href = '/home';
+            window.location.href = '/admin';
         } catch (error) {
             console.log(error);
             setloading(false);
@@ -34,7 +34,7 @@ function AdminLogin() {
                 <div>
                     {error && (<Error message="Invalid credentials" />)}
                     <div className="shadow-lg p-3 mb-5 bg-white rounded">
-                        <h1> Login</h1>
+                        <h1>Admin  Login</h1>
                         <input type="text" className="form-control shadow-lg p-3 mb-5 bg-white rounded" placeholder="email" value={email} onChange={(e) => { setemail(e.target.value) }} />
                         <input type="password" className="form-control shadow-lg p-3 mb-5 bg-white rounded" placeholder="password" value={password} onChange={(e) => { setpassword(e.target.value) }} />
                         <button className="btn btn-outline" onClick={login}>Login</button>

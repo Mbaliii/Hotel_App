@@ -1,13 +1,47 @@
-/* contact.css */
-.contact-container {
-    background-image: url('https://rhhotelpretoria.co.za/wp-content/uploads/2023/03/RH-Hotel-Pretoria-Hero-Image-By-Day.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    min-height: 100vh;
-    margin-top: 5px;
+body {
+    margin: 5;
+    padding: 5;
+    /* background-color: rgb(227, 227, 227); */
 }
 
-h1 {
-    color: black;
+* {
+    box-sizing: border-box;
+}
+
+form {
+    display: block;
+    background-color: rgba(201, 201, 201, 0.16);
+    box-shadow: 5px 5px 5px 5px;
+    margin: 90px auto;
+    max-width: 600px;
+    max-height: 700px;
+    padding: 20px;
+
+}
+
+form input,
+textarea {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 15px auto;
+    padding: 10px;
+    border: 2px solid rgb(70, 83, 91);
+}
+
+form span {
+    color: rgb(0, 72, 100);
+}
+
+form button {
+    height: 25px;
+    width: 60px;
+    align-items: center;
+    border: none;
+    background: rgba(29, 185, 237);
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+}
+.blue-text{
+    color: rgb(18, 104, 105);
 }

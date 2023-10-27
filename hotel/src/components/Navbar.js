@@ -47,7 +47,7 @@ function NavBar() {
                         </li>
 
                         <li className='nav-item'>
-                            <a className='nav-link' href='/admin'>Admin</a>
+                            <a className='nav-link' href='/adminregister'>Admin</a>
                         </li>
                     </>)}
                 </ul>

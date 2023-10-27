@@ -1,5 +1,125 @@
-.services{
+.services {
     text-align: center;
     font-weight: bold;
 
+}
+
+.page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: goldenrod;
+}
+
+.centered-content {
+    text-align: center;
+    padding: 20px;
+    width: 250px;
+
+}
+
+.centered-content h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+    color: goldenrod;
+}
+
+.homeTitle {
+    color: goldenrod;
+    font-weight: bold;
+}
+
+.h5 {
+    font-weight: bold;
+}
+
+.the-hotel {
+    color: goldenrod;
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40vh;
+    font-family: 'Franklin Gothic Medium' !important;
+
+}
+
+.h5-2 {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin-top: 40px;
+    font-weight: bold !important;
+    font-size: 50px !important;
+    font-family: 'Franklin Gothic Medium' !important;
+}
+
+.description {
+    font-family: 'Franklin Gothic Medium' !important;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.spa {
+    margin-top: 60px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Franklin Gothic Medium' !important;
+    font-size: 50px;
+    color: goldenrod;
+
+}
+
+.lead {
+    font-weight: 30px !important;
+}
+
+.para {
+    font-size: 20px !important;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Franklin Gothic Medium' !important;
+    font-weight: bold !important;
+}
+
+.activity {
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+}
+
+.lean {
+    font-size: 15px !important;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Franklin Gothic Medium' !important;
+    font-weight: bold !important;
+}
+
+.best {
+    font-family: 'Franklin Gothic Medium' !important;
+    font-weight: bold !important;
+    color: goldenrod;
+}
+
+.graph {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Franklin Gothic Medium' !important;
+    font-weight: bold !important;
+    font-size: 15px !important;
 }
